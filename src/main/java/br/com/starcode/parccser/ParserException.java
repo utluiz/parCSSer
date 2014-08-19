@@ -1,5 +1,8 @@
 package br.com.starcode.parccser;
 
+/**
+ * Exceptions in parsing.
+ */
 public class ParserException extends Exception {
 
     private static final long serialVersionUID = 1L;

@@ -9,6 +9,9 @@ import br.com.starcode.parccser.model.Selector;
 import br.com.starcode.parccser.model.SimpleSelectorSequence;
 import br.com.starcode.parccser.model.TypeSelector;
 
+/**
+ * Utility class if someone doesn't want to override all methods.
+ */
 public abstract class AbstractParserListener implements ParserListener {
 	
 	public void beginGroup(int number, int position) {

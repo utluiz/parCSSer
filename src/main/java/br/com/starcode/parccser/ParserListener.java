@@ -9,6 +9,9 @@ import br.com.starcode.parccser.model.Selector;
 import br.com.starcode.parccser.model.SimpleSelectorSequence;
 import br.com.starcode.parccser.model.TypeSelector;
 
+/**
+ * This interface is for callback objects that would receive the parsed elements from CSS. 
+ */
 public interface ParserListener {
 
     void beginGroup(int number, int position);

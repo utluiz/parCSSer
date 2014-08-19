@@ -1,5 +1,8 @@
 package br.com.starcode.parccser.model;
 
+/**
+ * Represents the context of some parsed element 
+ */
 public class Context {
 
     private String selector;

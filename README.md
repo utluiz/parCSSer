@@ -17,6 +17,11 @@ All main features implemented.
 All important methods covered by tests, including failure scenarios.
 Lacks UTF-8 Characters Support.
 
+## Roadmap
+
+- Show the exact position on errors (and test it)
+- Maybe... parse the whole CSS?
+
 ## Get in touch
 
 Please, fell free to tell me if you have any issue, suggestion, contribution or any comment. ;)

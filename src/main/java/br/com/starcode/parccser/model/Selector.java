@@ -2,6 +2,9 @@ package br.com.starcode.parccser.model;
 
 import java.util.List;
 
+/**
+ * Base class for selector element classes.
+ */
 public class Selector extends AbstractContext {
 
     private List<SimpleSelectorSequence> simpleSelectors;

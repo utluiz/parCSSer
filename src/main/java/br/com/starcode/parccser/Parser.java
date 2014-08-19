@@ -21,6 +21,8 @@ import br.com.starcode.parccser.model.PseudoExpression.Type;
 import br.com.starcode.parccser.model.PseudoSelector.PseudoType;
 
 /**
+ * That's the main class for parsing CSS selectors.
+ * 
  * Selector list:
  * http://www.w3.org/TR/css3-selectors/#selectors
  */
@@ -45,6 +47,15 @@ public class Parser {
         this.len = selector.length();
     }
     
+    /**
+     * Starts parsing the selector
+     * @throws ParserException
+     */
+    public void interpret() throws ParserException {
+        next();
+        groups();
+    } 
+    
     protected Character next() {
         if (pos < len) {
             pos++;
@@ -59,16 +70,11 @@ public class Parser {
         return pos >= len;
     }
     
-    public void interpret() throws ParserException {
-        next();
-        groups();
-    } 
-    
     /**
      * selectors_group
      *  : selector [ COMMA S* selector ]*
      */
-    public List<Selector> groups() throws ParserException {
+    protected List<Selector> groups() throws ParserException {
 
         List<Selector> groups = new ArrayList<Selector>();
         int groupNumber = 0;
@@ -97,7 +103,7 @@ public class Parser {
      *  combinator
      *  : PLUS S* | GREATER S* | TILDE S* | S+
      */
-    public Selector selector() throws ParserException {
+    protected Selector selector() throws ParserException {
         int initialPosition = pos;
         StringBuilder sb = new StringBuilder();
         List<SimpleSelectorSequence> simpleSelectors = new ArrayList<SimpleSelectorSequence>();
@@ -166,7 +172,7 @@ public class Parser {
      * class
      *  : '.' IDENT
      */
-    public SimpleSelectorSequence simpleSelectorSequence() throws ParserException {
+    protected SimpleSelectorSequence simpleSelectorSequence() throws ParserException {
         
         List<SimpleSelector> simpleSelectorList = new ArrayList<SimpleSelector>();
         StringBuilder sb = new StringBuilder();

@@ -9,6 +9,9 @@ import br.com.starcode.parccser.model.Selector;
 import br.com.starcode.parccser.model.SimpleSelectorSequence;
 import br.com.starcode.parccser.model.TypeSelector;
 
+/**
+ * Utility class is someone needs more than one listener at the same time.
+ */
 public class MultipleParserListener implements ParserListener {
 
     private ParserListener[] listeners;
