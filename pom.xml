@@ -9,6 +9,8 @@
 	<url>https://github.com/utluiz/parCSSer</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gpg.homedir>.</gpg.homedir>
+		<gpg.secretKeyring>pk.gpg</gpg.secretKeyring>
 	</properties>
 	<dependencies>
 		<dependency>

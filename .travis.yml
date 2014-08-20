@@ -1,12 +1,15 @@
 language: java
 jdk:
-- oraclejdk8
+#- oraclejdk8
 - oraclejdk7
-- oraclejdk6
-- oraclejdk5
-- openjdk7
-- openjdk6
+#- oraclejdk6
+#- openjdk7
+#- openjdk6
 env:
   global:
   - secure: Z4Uog23iOIu1hig9Jo6EG1SNMlf9ccFwgCgRgwuzlJkUWIdSfmDTpC0zhEK4I6fstMwCYOn96ZmzjLqwRZac/6FBcxdmZYd2ZsNYTG8LrRTPYswxFLhSL8oVGD6Rrw+yo3r1nRPekFsbAmEVrSoxX6thkhtldEyve2J7OIQeJ7g=
   - secure: CGO0xjROQydae1Z1dYlkT/cE0pvPUdGv8mIZtOLR48P4Hb+E8WBjIhagDr3OYZEywDGdwVq2eZqQzbN5UGggCdnTmR1ntQCg8nfvK/PiaVrOXcm2fS+PB+PFuilwsNIibAVLZkGQMV+XudjvDAvTlq2Pp9X7geKKppxoRCAlPKc=
+  - secure: rkPeup/iBfd83aLt6v/LOaKoqtLBwt3sF4Co9vQyPfsjkJDmzkwaM5FzDIbIpI7EmKPLPgb4KOQMWSgtCy50XOFXI4+KQ3lkNZloD/pyXmpDyVTSw5UjPe1MAQCocdH8ETiSMK2Ywhv3RSJMc6G2bgZqRO1Z08Yjinn9RurASZk=
+before_install:
+- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv
+  -in pk.gpg.enc -out pk.gpg -d
