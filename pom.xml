@@ -9,8 +9,8 @@
 	<url>https://github.com/utluiz/parCSSer</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gpg.homedir>.</gpg.homedir>
-		<gpg.secretKeyring>./pk.gpg</gpg.secretKeyring>
+		<!-- <gpg.homedir>.</gpg.homedir>
+		<gpg.secretKeyring>./pk.asc</gpg.secretKeyring> -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -75,6 +75,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<executable>gpg2</executable>
+					<keyname>F5A1C843</keyname>
+					<homedir>${project.build.directory}/gpg</homedir>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
