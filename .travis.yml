@@ -12,7 +12,7 @@ env:
   # SONATYPE_PASSWORD
   - secure: CGO0xjROQydae1Z1dYlkT/cE0pvPUdGv8mIZtOLR48P4Hb+E8WBjIhagDr3OYZEywDGdwVq2eZqQzbN5UGggCdnTmR1ntQCg8nfvK/PiaVrOXcm2fS+PB+PFuilwsNIibAVLZkGQMV+XudjvDAvTlq2Pp9X7geKKppxoRCAlPKc=
   # GPG_PASSPHRASE
-  - secure: rkPeup/iBfd83aLt6v/LOaKoqtLBwt3sF4Co9vQyPfsjkJDmzkwaM5FzDIbIpI7EmKPLPgb4KOQMWSgtCy50XOFXI4+KQ3lkNZloD/pyXmpDyVTSw5UjPe1MAQCocdH8ETiSMK2Ywhv3RSJMc6G2bgZqRO1Z08Yjinn9RurASZk=
+  - secure: qc1Z5SOx6+sq4huAy+MWywGtO9JHolbQg6zNU5RVH6KJIXSYB/JAsSh/yDnD8EZ6ybex/+z/1dWRRTvB9s/mmml02PQV5prr2Y1bcxYD5En6SRWFVHvwi+xU1LnqYJK5dKOh2+heDJpM5ojW1cyzJoFRfXQxDSQQ+icnnibqueI=
 before_install:
 - mkdir gpg
 - openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in secring.gpg.enc -out gpg/secring.gpg -d
