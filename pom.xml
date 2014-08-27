@@ -78,6 +78,7 @@
 				<configuration>
 					<keyname>6890A685</keyname>
 					<homedir>gpg</homedir>
+					<passphrase>${GPG_PASSPHRASE}</passphrase>
 				</configuration>
 			</plugin>
 		</plugins>
