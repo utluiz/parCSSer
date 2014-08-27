@@ -18,5 +18,5 @@ env:
   - secure: "epqcUfjdyWXf/iZ97672mJInkNEKWdPuo+6CZePb/YHuTIcNFrVctnMMkkzQz5GY9iybBc76qMpZEuVDWxaEEqn8vH5GyNJ67XkENhCHOft7RS49cKTmBOxfjjoFf3fsz1tGAfKbY7i0PJYkugmdb6tYeyjJzqvta13RGeIYZd8="
 before_install:
 - mkdir gpg
-- openssl aes-256-cbc -k "$ENC_SECRET" -in secring.gog.enc -d -a -out gpg/secring.gog
+- openssl aes-256-cbc -k "$ENC_SECRET" -in secring.gpg.enc -d -a -out gpg/secring.gpg
 - openssl aes-256-cbc -k "$ENC_SECRET" -in pubring.gpg.enc -d -a -out gpg/pubring.gpg

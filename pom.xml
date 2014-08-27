@@ -76,7 +76,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<keyname>6890A685</keyname>
+					<keyname>F5A1C843</keyname>
 					<homedir>gpg</homedir>
 					<passphrase>${GPG_PASSPHRASE}</passphrase>
 				</configuration>
