@@ -15,6 +15,12 @@ env:
   - secure: "EWH1cxXUCH40iCgEzNCgCpgP0Ev+tSCJkXYou5a7A5jIF8+eJQhZsXen8nxiptgp1iTjRp8zN0mFNvYcQIIG/46/3jJuZ0/orz/jo9zYVawD2izDv50OKf868IwUCjagD1EvMTaCc9pu6UQJnNjcR90Zc6QHpH4Samlacxlw5hA="
   #- secure: qc1Z5SOx6+sq4huAy+MWywGtO9JHolbQg6zNU5RVH6KJIXSYB/JAsSh/yDnD8EZ6ybex/+z/1dWRRTvB9s/mmml02PQV5prr2Y1bcxYD5En6SRWFVHvwi+xU1LnqYJK5dKOh2+heDJpM5ojW1cyzJoFRfXQxDSQQ+icnnibqueI=
 before_install:
+- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in segredo1.txt.enc -out segredo1.txt -d
+- cat segredo1.txt
+- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in segredo2.txt.enc -out segredo2.txt -d
+- cat segredo2.txt
+- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in segredo3.txt.enc -out segredo3.txt -d
+- cat segredo3.txt
 - mkdir gpg
 - openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in secring.gpg.enc -out gpg/secring.gpg -d
 - openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in pubring.gpg.enc -out gpg/pubring.gpg -d
