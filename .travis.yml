@@ -1,8 +1,8 @@
 language: java
 jdk:
 - oraclejdk8
-- oraclejdk7
-- openjdk7
+#- oraclejdk7
+#- openjdk7
 env:
   global:
   # SONATYPE_USERNAME
@@ -19,4 +19,5 @@ before_install:
 - openssl aes-256-cbc -k "$ENC_SECRET" -in deploy-files/pubring.gpg.enc -d -a -out gpg/pubring.gpg
 after_success:
 - java_version=$(javac -version) 
-- "[[ $java_version =~ 1.8 ]] && mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml"
+#- "[[ $java_version =~ 1.8 ]] && mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml"
+- mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml
