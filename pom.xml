@@ -76,9 +76,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<executable>gpg2</executable>
-					<keyname>F5A1C843</keyname>
-					<homedir>${project.build.directory}/gpg</homedir>
+					<keyname>6890A685</keyname>
+					<homedir>gpg</homedir>
 				</configuration>
 			</plugin>
 		</plugins>
