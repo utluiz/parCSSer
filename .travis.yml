@@ -17,19 +17,6 @@ env:
   # ENC_SECRET
   - secure: "epqcUfjdyWXf/iZ97672mJInkNEKWdPuo+6CZePb/YHuTIcNFrVctnMMkkzQz5GY9iybBc76qMpZEuVDWxaEEqn8vH5GyNJ67XkENhCHOft7RS49cKTmBOxfjjoFf3fsz1tGAfKbY7i0PJYkugmdb6tYeyjJzqvta13RGeIYZd8="
 before_install:
-- openssl aes-256-cbc -k "$ENC_SECRET" -in segredo1.txt.enc -d -a -out segredo1.txt
-- openssl aes-256-cbc -k "$ENC_SECRET" -in pubring.gpg.enc -d -a -out pubring.gpg
-
-#- secret=`openssl rsautl -decrypt -inkey ~/.ssh/id_rsa -in .chef/travis_secret`
-#- echo $secret
-#- openssl aes-256-cbc -k "$secret" -in segredo.enc -d -a -out segredo.txt
-#- cat segredo1.txt
-#- openssl aes-256-cbc -K "$encrypted_e8dc7999308b_key" -iv "$encrypted_e8dc7999308b_iv" -in segredo.enc -out segredo.txt -d
-#- cat segredo1.txt
-#- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in segredo2.txt.enc -out segredo2.txt -d
-#- cat segredo2.txt
-#- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in segredo3.txt.enc -out segredo3.txt -d
-#- cat segredo3.txt
-#- mkdir gpg
-#- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in secring.gpg.enc -out gpg/secring.gpg -d
-#- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in pubring.gpg.enc -out gpg/pubring.gpg -d
+- mkdir gpg
+- openssl aes-256-cbc -k "$ENC_SECRET" -in secring.gog.enc -d -a -out gpg/secring.gog
+- openssl aes-256-cbc -k "$ENC_SECRET" -in pubring.gpg.enc -d -a -out gpg/pubring.gpg
