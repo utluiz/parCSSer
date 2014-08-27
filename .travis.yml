@@ -14,5 +14,6 @@ env:
   # GPG_PASSPHRASE
   - secure: rkPeup/iBfd83aLt6v/LOaKoqtLBwt3sF4Co9vQyPfsjkJDmzkwaM5FzDIbIpI7EmKPLPgb4KOQMWSgtCy50XOFXI4+KQ3lkNZloD/pyXmpDyVTSw5UjPe1MAQCocdH8ETiSMK2Ywhv3RSJMc6G2bgZqRO1Z08Yjinn9RurASZk=
 before_install:
-- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in secring.gpg.enc -out secring.gpg -d
-- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in pubring.gpg.enc -out pubring.gpg -d
+- mkdir gpg
+- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in secring.gpg.enc -out gpg/secring.gpg -d
+- openssl aes-256-cbc -K $encrypted_e8dc7999308b_key -iv $encrypted_e8dc7999308b_iv -in pubring.gpg.enc -out gpg/pubring.gpg -d
