@@ -4,12 +4,12 @@ public class AttributeSelector extends SimpleSelector {
 
     private String name;
     private AttributeOperator operator;
-    private String value;
+    private StringValue value;
     
     public AttributeSelector(
             String name, 
             AttributeOperator operator,
-            String value,
+            StringValue value,
             Context context) {
         super(context);
         this.name = name;
@@ -25,7 +25,7 @@ public class AttributeSelector extends SimpleSelector {
         return operator;
     }
     
-    public String getValue() {
+    public StringValue getValue() {
         return value;
     }
     

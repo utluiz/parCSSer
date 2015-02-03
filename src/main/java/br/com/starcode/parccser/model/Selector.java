@@ -13,6 +13,7 @@ public class Selector extends AbstractContext {
     public Selector(List<SimpleSelectorSequence> simpleSelectors, List<Combinator> combinators, Context context) {
         super(context);
         this.simpleSelectors = simpleSelectors;
+        this.combinators = combinators;
     }
     
     public List<SimpleSelectorSequence> getSelectors() {

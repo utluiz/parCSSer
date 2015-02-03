@@ -9,8 +9,6 @@
 	<url>https://github.com/utluiz/parCSSer</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- <gpg.homedir>.</gpg.homedir>
-		<gpg.secretKeyring>./pk.asc</gpg.secretKeyring> -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -19,11 +17,11 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.7</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	<build>
 		<plugins>

@@ -28,6 +28,6 @@ Lacks UTF-8 Characters Support.
 
 Please, fell free to tell me if you have any issue, suggestion, contribution or any comment. ;)
 
-Jut go to [http://luizricardo.org](http://luizricardo.org/en/who-i-am/#contact).
+Just go to [http://luizricardo.org](http://luizricardo.org/en/who-i-am/#contact).
 
   [1]: http://www.w3.org/TR/css3-selectors/

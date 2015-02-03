@@ -57,7 +57,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            new Parser("a > ", new Listener()).interpret();
+            new Parser("a > ", new MockListener()).interpret();
         } catch (ParserException e) {
             hasException = true;
         }
@@ -70,7 +70,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            new Parser("a z ^", new Listener()).interpret();
+            new Parser("a z ^", new MockListener()).interpret();
         } catch (ParserException e) {
             hasException = true;
         }
@@ -96,7 +96,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            new Parser("[=]", new Listener()).interpret();
+            new Parser("[=]", new MockListener()).interpret();
         } catch (ParserException e) {
             hasException = true;
         }
@@ -109,7 +109,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            new Parser("[a", new Listener()).interpret();
+            new Parser("[a", new MockListener()).interpret();
         } catch (ParserException e) {
             hasException = true;
         }
@@ -122,7 +122,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            new Parser("a#", new Listener()).interpret();
+            new Parser("a#", new MockListener()).interpret();
         } catch (ParserException e) {
             hasException = true;
         }
@@ -135,7 +135,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            new Parser("x.", new Listener()).interpret();
+            new Parser("x.", new MockListener()).interpret();
         } catch (ParserException e) {
             hasException = true;
         }
@@ -148,7 +148,7 @@ public class ErrorSelectorParserTest {
         
         boolean hasException = false;
         try {
-            Listener l = new Listener();
+            MockListener l = new MockListener();
             new Parser("[val=1]", l).interpret();
         } catch (ParserException e) {
             //e.printStackTrace();

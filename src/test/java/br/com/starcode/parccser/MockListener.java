@@ -14,7 +14,7 @@ import br.com.starcode.parccser.model.SimpleSelectorSequence;
 import br.com.starcode.parccser.model.TypeSelector;
 
 
-public class Listener implements ParserListener {
+public class MockListener implements ParserListener {
         
 	final List<String> lista = new ArrayList<String>();
 	private int number;
@@ -76,6 +76,5 @@ public class Listener implements ParserListener {
 	public void negationPseudoSelector(PseudoSelector pseudoSelector) {
 		lista.add("negationPseudoSelector=" + pseudoSelector.getType().toString() + "|" + pseudoSelector);
 	}
-
 
 }

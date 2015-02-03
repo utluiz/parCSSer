@@ -15,6 +15,7 @@ import br.com.starcode.parccser.model.PseudoSelector;
 import br.com.starcode.parccser.model.Selector;
 import br.com.starcode.parccser.model.SimpleSelector;
 import br.com.starcode.parccser.model.SimpleSelectorSequence;
+import br.com.starcode.parccser.model.StringValue;
 import br.com.starcode.parccser.model.TypeSelector;
 import br.com.starcode.parccser.model.PseudoExpression.Item;
 import br.com.starcode.parccser.model.PseudoExpression.Type;
@@ -34,7 +35,15 @@ public class Parser {
     protected Character current;
     protected ParserListener parserListener;
     
-    public Parser(String selector, ParserListener parserListener) {
+    public static List<Selector> parse(String selector, ParserListener parserListener) throws ParserException {
+    	return new Parser(selector, parserListener).interpret();
+    }
+    
+    public static List<Selector> parse(String selector) throws ParserException {
+    	return new Parser("*", new EmptyParserListener()).interpret();
+    }
+    
+    protected Parser(String selector, ParserListener parserListener) {
         if (selector == null || selector.trim().isEmpty()) {
             throw new IllegalArgumentException("Selector cannot be null or empty!");
         }
@@ -51,9 +60,9 @@ public class Parser {
      * Starts parsing the selector
      * @throws ParserException
      */
-    public void interpret() throws ParserException {
+    public List<Selector> interpret() throws ParserException {
         next();
-        groups();
+        return groups();
     } 
     
     protected Character next() {
@@ -108,6 +117,7 @@ public class Parser {
         StringBuilder sb = new StringBuilder();
         List<SimpleSelectorSequence> simpleSelectors = new ArrayList<SimpleSelectorSequence>();
         List<Combinator> combinators = new ArrayList<Combinator>();
+        int lastChar = pos;
         while (!end()) {
         	//finds combinator, but not in the first iteration
         	Combinator combinator = null;
@@ -129,10 +139,12 @@ public class Parser {
                     if (combinator == null || current == ',') {
                         break;
                     }
-                    sb.append(current);
                     //don't advance because spaces were just advanced
                     if (combinator != Combinator.DESCENDANT) {
+                    	sb.append(current);
                         next();
+                    } else {
+                    	sb.append(' ');
                     }
                     ignoreWhitespaces();
                     if (end()) {
@@ -147,8 +159,9 @@ public class Parser {
             //sends combinator here (the first case it's null)
             simpleSelectors.add(simpleSelectorSequence);
             parserListener.selectorSequence(simpleSelectorSequence, combinator);
+            lastChar = pos;
         }
-        return new Selector(simpleSelectors, combinators, new Context(content, sb.toString(), initialPosition, pos));
+        return new Selector(simpleSelectors, combinators, new Context(content, sb.toString(), initialPosition, lastChar));
     }
     
     /**
@@ -182,7 +195,7 @@ public class Parser {
             //universal selector
             sb.append(current);
             hasSimpleSelector = true;
-            TypeSelector ts = new TypeSelector("*", new Context(content, "*", initialPos, pos));
+            TypeSelector ts = new TypeSelector("*", new Context(content, "*", initialPos, pos + 1));
             parserListener.typeSelector(ts);
             simpleSelectorList.add(ts);
             next();
@@ -267,7 +280,9 @@ public class Parser {
                     NegationSelector n = negation(selectorCount);
                     simpleSelectorList.add(n);
                     sb.append(ident);
+                    sb.append('(');
                     sb.append(n);
+                    sb.append(')');
                 } else {
                     //pseudo-class
                     PseudoSelector ps = pseudo(ident, PseudoType.PseudoClass, false);
@@ -337,17 +352,19 @@ public class Parser {
         }
         
         //value
-        String value = null;
+        StringValue value = null;
         if (operator != null) {
             sb.append(operator.getSign());
             if (current == '\'' || current == '"') {
                 char quote = current;
                 value = string();
                 sb.append(quote);
-                sb.append(value);
+                sb.append(value.getContext().toString());
                 sb.append(quote);
             } else {
-                value = identifier();
+            	int identPos = pos;
+                String ident = identifier();
+                value = new StringValue(new Context(content, ident, identPos, pos), ident);
                 sb.append(value);
             }
         }
@@ -374,25 +391,29 @@ public class Parser {
      * unicode   \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
      * nl        \n|\r\n|\r|\f
      */
-    protected String string() throws ParserException {
+    protected StringValue string() throws ParserException {
         Character openQuote = current;
+        int initialPosition = pos;
         boolean escape = false;
         next();
-        StringBuilder sb = new StringBuilder(); 
+        StringBuilder value = new StringBuilder(); 
+        StringBuilder string = new StringBuilder();
         while (!end()) {
             if (escape) {
                 //TODO implement UNICODE
                 if (current == openQuote || current == '\\') {
-                    sb.append(current);
+                    value.append(current);
+                    string.append(current);
                     escape = false;
                 } else {
                     throw new ParserException("Invalid escape character at position " + pos);
                 }
             } else {
+                string.append(current);
                 if (current == '\\') {
                     escape = true;
                 } else {
-                    sb.append(current);
+                    value.append(current);
                 }
             }
             next();
@@ -403,7 +424,7 @@ public class Parser {
             throw new ParserException("String not closed!");
         }
         next();
-        return sb.toString();
+        return new StringValue(new Context(content, string.toString(), initialPosition, pos), value.toString());
         
     }
     
@@ -444,7 +465,7 @@ public class Parser {
         if (end() || current != '(') {
             throw new ParserException("Expected '(' at position " + pos);
         }
-        sb.append(current);
+        //sb.append(current);
         int parenthesisPos = pos;
         next();
         ignoreWhitespaces();
@@ -532,7 +553,7 @@ public class Parser {
         if (end() || current != ')') {
             throw new ParserException("Expected ')' at position " + pos);
         }
-        sb.append(current);
+        //sb.append(current);
         next();
             
         return new NegationSelector(simpleSelector, new Context(content, sb.toString(), parenthesisPos, pos));
@@ -622,11 +643,11 @@ public class Parser {
                 }
             } else if (current == '\'' || current == '"') {
             	Character quote = current;
-                String s = string();
+                StringValue s = string();
                 sb.append(quote);
-                sb.append(s);
+                sb.append(s.getContext().toString());
                 sb.append(quote);
-                items.add(new Item(Type.StringType, s));
+                items.add(new Item(Type.StringType, s.getActualValue()));
             } else {
                 break;
             }
