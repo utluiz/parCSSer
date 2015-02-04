@@ -158,4 +158,19 @@ public class ErrorSelectorParserTest {
         
     }
     
+    @Test
+    public void mixedQuotes() {
+        
+        boolean hasException = false;
+        try {
+            MockListener l = new MockListener();
+            new Parser("[val='\"]", l).interpret();
+        } catch (ParserException e) {
+            //e.printStackTrace();
+            hasException = true;
+        }
+        Assert.assertTrue(hasException);
+        
+    }
+    
 }

@@ -40,7 +40,7 @@ public class Parser {
     }
     
     public static List<Selector> parse(String selector) throws ParserException {
-    	return new Parser("*", new EmptyParserListener()).interpret();
+    	return new Parser(selector, new EmptyParserListener()).interpret();
     }
     
     protected Parser(String selector, ParserListener parserListener) {
@@ -409,6 +409,7 @@ public class Parser {
                     throw new ParserException("Invalid escape character at position " + pos);
                 }
             } else {
+            	if (current == openQuote) break;
                 string.append(current);
                 if (current == '\\') {
                     escape = true;
@@ -417,7 +418,6 @@ public class Parser {
                 }
             }
             next();
-            if (!escape && current == openQuote) break;
         }
         
         if (current != openQuote) {

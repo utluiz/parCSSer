@@ -225,13 +225,71 @@ public class SimpleSelectorParserTest {
     }
     
     @Test
+    public void attributeEmptySelector() throws Exception {
+        
+    	List<Selector> selectors = Parser.parse("[name=\"\"]", listener);
+        
+        Assert.assertEquals(1, selectors.size());
+        Selector sel1 = selectors.get(0);
+        Assert.assertEquals(1, sel1.getSelectors().size());
+        Assert.assertEquals(0, sel1.getCombinators().size());
+        Assert.assertEquals("[name=\"\"]", sel1.getContext().toString());
+        Assert.assertEquals("[name=\"\"]", sel1.getContext().getSelector());
+        Assert.assertEquals(0, sel1.getContext().getStartPosition());
+        Assert.assertEquals(9, sel1.getContext().getEndPosition());
+        
+        SimpleSelectorSequence sss = sel1.getSelectors().get(0);
+        Assert.assertEquals(1, sss.getSimpleSelectors().size());
+        Assert.assertEquals("[name=\"\"]", sss.getContext().toString());
+        
+        SimpleSelector ss = sss.getSimpleSelectors().get(0);
+        Assert.assertTrue(ss instanceof AttributeSelector);
+        
+        AttributeSelector ts = (AttributeSelector) ss;
+        Assert.assertEquals("name=\"\"", ts.getContext().toString());
+        Assert.assertEquals("name", ts.getName());
+        Assert.assertEquals(AttributeOperator.EQUALS, ts.getOperator());
+        Assert.assertEquals("", ts.getValue().getActualValue());
+        
+    }
+    
+    @Test
+    public void attributeEmptySelectorSingleQuotes() throws Exception {
+        
+    	List<Selector> selectors = Parser.parse("[name='']", listener);
+        
+        Assert.assertEquals(1, selectors.size());
+        Selector sel1 = selectors.get(0);
+        Assert.assertEquals(1, sel1.getSelectors().size());
+        Assert.assertEquals(0, sel1.getCombinators().size());
+        Assert.assertEquals("[name='']", sel1.getContext().toString());
+        Assert.assertEquals("[name='']", sel1.getContext().getSelector());
+        Assert.assertEquals(0, sel1.getContext().getStartPosition());
+        Assert.assertEquals(9, sel1.getContext().getEndPosition());
+        
+        SimpleSelectorSequence sss = sel1.getSelectors().get(0);
+        Assert.assertEquals(1, sss.getSimpleSelectors().size());
+        Assert.assertEquals("[name='']", sss.getContext().toString());
+        
+        SimpleSelector ss = sss.getSimpleSelectors().get(0);
+        Assert.assertTrue(ss instanceof AttributeSelector);
+        
+        AttributeSelector ts = (AttributeSelector) ss;
+        Assert.assertEquals("name=''", ts.getContext().toString());
+        Assert.assertEquals("name", ts.getName());
+        Assert.assertEquals(AttributeOperator.EQUALS, ts.getOperator());
+        Assert.assertEquals("", ts.getValue().getActualValue());
+        
+    }
+    
+    @Test
     public void attributeEscapeSelector() throws Exception {
         
-    	List<Selector> selectors = Parser.parse("[name='\\'test\\'']", listener);
-        Assert.assertEquals(4, listener.getLista().size());
-        Assert.assertEquals("beginGroup=0", listener.getLista().get(0));
-        Assert.assertEquals("attributeSelector=name='\\'test\\''", listener.getLista().get(1));
-        Assert.assertEquals("endGroup=0", listener.getLista().get(3));
+    	List<Selector> selectors = Parser.parse("[name='\\'test\\'']");
+//        Assert.assertEquals(4, listener.getLista().size());
+//        Assert.assertEquals("beginGroup=0", listener.getLista().get(0));
+//        Assert.assertEquals("attributeSelector=name='\\'test\\''", listener.getLista().get(1));
+//        Assert.assertEquals("endGroup=0", listener.getLista().get(3));
         
         Assert.assertEquals(1, selectors.size());
         Selector sel1 = selectors.get(0);
