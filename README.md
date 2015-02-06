@@ -11,7 +11,15 @@ Add jQuery-like capabilities to virtually any library.
 
 ## How 
 
-CSS3 Selector parser based on [W3C Official Specification][1]
+CSS3 Selector parser implementaion based on [W3C Official Specification][1].
+
+Just add the following dependency:
+
+	<dependency>
+		<groupId>br.com.starcode.parccser</groupId>
+		<artifactId>parccser</artifactId>
+		<version>1.0-RELEASE</version>
+	</dependency>
 
 ## Status
 
@@ -21,12 +29,14 @@ Lacks UTF-8 Characters Support.
 
 ## Roadmap
 
-- Show the exact position on errors (and test it)
-- Maybe... parse the whole CSS?
+- Improve error handling with mor accurate information
+- Maybe... parse the whole CSS files
+- Maybe... Implement [SAC](http://www.w3.org/Style/CSS/SAC/)
+- Any idea?
 
 ## Get in touch
 
-Please, fell free to tell me if you have any issue, suggestion, contribution or any comment. ;)
+Please, fell free to tell me if you have any issue, suggestion, contribution, or comment. ;)
 
 Just go to [http://luizricardo.org](http://luizricardo.org/en/who-i-am/#contact).
 
