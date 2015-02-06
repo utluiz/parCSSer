@@ -10,16 +10,17 @@ import br.com.starcode.parccser.model.Combinator;
 import br.com.starcode.parccser.model.Context;
 import br.com.starcode.parccser.model.HashSelector;
 import br.com.starcode.parccser.model.NegationSelector;
-import br.com.starcode.parccser.model.PseudoExpression;
 import br.com.starcode.parccser.model.PseudoSelector;
+import br.com.starcode.parccser.model.PseudoType;
 import br.com.starcode.parccser.model.Selector;
 import br.com.starcode.parccser.model.SimpleSelector;
 import br.com.starcode.parccser.model.SimpleSelectorSequence;
 import br.com.starcode.parccser.model.StringValue;
 import br.com.starcode.parccser.model.TypeSelector;
-import br.com.starcode.parccser.model.PseudoExpression.Item;
-import br.com.starcode.parccser.model.PseudoExpression.Type;
-import br.com.starcode.parccser.model.PseudoSelector.PseudoType;
+import br.com.starcode.parccser.model.expression.Item;
+import br.com.starcode.parccser.model.expression.PseudoExpression;
+import br.com.starcode.parccser.model.expression.PseudoExpressionEvaluator;
+import br.com.starcode.parccser.model.expression.Type;
 
 /**
  * That's the main class for parsing CSS selectors.
@@ -270,7 +271,7 @@ public class Parser {
                     if (hasPseudoElement) {
                         throw new ParserException("Only one pseudo-element is allowed for each simple selector and a second one was found at position " + pos);
                     }
-                    PseudoSelector ps = pseudo(ident, PseudoType.PseudoElement, doubleColon);
+                    PseudoSelector ps = pseudo(ident, PseudoType.PSEUDO_ELEMENT, doubleColon);
                     simpleSelectorList.add(ps);
                     parserListener.pseudoSelector(ps);
                     sb.append(ps);
@@ -285,7 +286,7 @@ public class Parser {
                     sb.append(')');
                 } else {
                     //pseudo-class
-                    PseudoSelector ps = pseudo(ident, PseudoType.PseudoClass, false);
+                    PseudoSelector ps = pseudo(ident, PseudoType.PSEUDO_CLASS, false);
                     simpleSelectorList.add(ps);
                     parserListener.pseudoSelector(ps);
                     sb.append(ps);
@@ -541,7 +542,7 @@ public class Parser {
             if ("not".equalsIgnoreCase(ident) || isPseudoSpecialCase(ident) || doubleColon) {
                 throw new ParserException("Expected pseudo-class (starting with ':', except ':not', ':first-line', ':first-letter', ':before' and ':after') at position " + pos);
             }
-            PseudoSelector ps = pseudo(ident, PseudoType.PseudoClass, doubleColon);
+            PseudoSelector ps = pseudo(ident, PseudoType.PSEUDO_CLASS, doubleColon);
             simpleSelector = ps;
             parserListener.negationPseudoSelector(ps);
             sb.append(ps.getContext());
@@ -574,7 +575,7 @@ public class Parser {
      */
     protected PseudoSelector pseudo(String ident, PseudoType type, boolean doubleColon) throws ParserException {
         
-    	int initialPost = pos;
+    	int initialPos = pos;
         StringBuilder sb = new StringBuilder();
         sb.append(ident);
         PseudoExpression expression = null;
@@ -598,7 +599,7 @@ public class Parser {
             sb.append(current);
             next();
         }
-        return new PseudoSelector(ident, type, doubleColon, expression, new Context(content, sb.toString(), initialPost, pos));
+        return new PseudoSelector(ident, type, doubleColon, expression, new Context(content, sb.toString(), initialPos, pos));
         
     }
     
@@ -615,46 +616,47 @@ public class Parser {
         
         List<Item> items = new ArrayList<Item>();
         StringBuilder sb = new StringBuilder();
-        while (!end()) {
+        int initialPos = pos;
+        
+        if (current == '\'' || current == '"') {
+        	//string
+        	Character quote = current;
+            StringValue s = string();
+            sb.append(quote);
+            sb.append(s.getContext().toString());
+            sb.append(quote);
+            items.add(new Item(Type.STRING, s.getActualValue()));
             
-            if (current == '+') {
-                items.add(new Item(Type.Signal, "+"));
-                sb.append(current);
-                next();
-            } else if (current == '-') {
-                items.add(new Item(Type.Signal, "-"));
-                sb.append(current);
-                next();
-            } else if (Character.isLetter(current)) {
-                //identifier
-                String ident = identifier();
-                sb.append(ident);
-                items.add(new Item(Type.Identifier, ident));
-            } else if (Character.isDigit(current)) {
-                //number or dimension
-                String number = number();
-                sb.append(number);
-                if (!end() && Character.isLetter(current)) {
-                    String ident = identifier();
-                    sb.append(ident);
-                    items.add(new Item(Type.Dimension, number + ident));
-                } else {
-                    items.add(new Item(Type.Number, number));
-                }
-            } else if (current == '\'' || current == '"') {
-            	Character quote = current;
-                StringValue s = string();
-                sb.append(quote);
-                sb.append(s.getContext().toString());
-                sb.append(quote);
-                items.add(new Item(Type.StringType, s.getActualValue()));
-            } else {
-                break;
-            }
-            ignoreWhitespaces();
-            
+            return new PseudoExpression(items, null, s.getActualValue(), new Context(content, sb.toString(), initialPos, pos));
+        } else {
+        	
+        	while (!end()) {
+	            if (current == '+') {
+	                items.add(new Item(Type.SIGNAL, "+"));
+	                sb.append(current);
+	                next();
+	            } else if (current == '-') {
+	                items.add(new Item(Type.SIGNAL, "-"));
+	                sb.append(current);
+	                next();
+	            } else if (Character.isLetter(current)) {
+	                //identifier
+	                String ident = simpleIdentifier();
+	                sb.append(ident);
+	                items.add(new Item(Type.IDENTIFIER, ident));
+	            } else if (Character.isDigit(current)) {
+	                //number or dimension
+	                String number = number();
+	                sb.append(number);
+	                items.add(new Item(Type.NUMBER, number));
+	            } else {
+	                break;
+	            }
+	            ignoreWhitespaces();
+	        }
+        	
         }
-        return new PseudoExpression(items, sb.toString());
+        return new PseudoExpression(items, PseudoExpressionEvaluator.evaluate(items), sb.toString(), new Context(content, sb.toString(), initialPos, pos));
         
     }
     
@@ -677,6 +679,15 @@ public class Parser {
             return "";
         }
         while (!end() && (Character.isLetterOrDigit(current) || current == '-' || current == '_')) {
+            sb.append(current);
+            next();
+        }
+        return sb.toString();
+    }
+    
+    protected String simpleIdentifier() throws ParserException {
+        StringBuilder sb = new StringBuilder();
+        while (!end() && (Character.isLetter(current))) {
             sb.append(current);
             next();
         }

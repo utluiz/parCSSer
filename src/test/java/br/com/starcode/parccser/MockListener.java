@@ -3,7 +3,6 @@ package br.com.starcode.parccser;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.starcode.parccser.ParserListener;
 import br.com.starcode.parccser.model.AttributeSelector;
 import br.com.starcode.parccser.model.ClassSelector;
 import br.com.starcode.parccser.model.Combinator;
@@ -54,7 +53,7 @@ public class MockListener implements ParserListener {
 	}
 
 	public void pseudoSelector(PseudoSelector pseudoSelector) {
-		lista.add("pseudoSelector=" + pseudoSelector.getType().toString() + "|" + pseudoSelector);
+		lista.add("pseudoSelector=" + pseudoSelector.getType().toString() + "|" + pseudoSelector.getContext().toString());
 	}
 
 	public void negationTypeSelector(TypeSelector typeSelector) {

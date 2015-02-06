@@ -237,7 +237,7 @@ public class NegationSelectorParserTest {
         Assert.assertEquals(5, l.getLista().size());
         Assert.assertEquals("beginGroup=0", l.getLista().get(0));
         Assert.assertEquals("typeSelector=a", l.getLista().get(1));
-        Assert.assertEquals("negationPseudoSelector=PseudoClass|disable", l.getLista().get(2));
+        Assert.assertEquals("negationPseudoSelector=PSEUDO_CLASS|disable", l.getLista().get(2));
         Assert.assertEquals("selectorSequence=null|a:not(:disable)", l.getLista().get(3));
         Assert.assertEquals("endGroup=0", l.getLista().get(4));
         

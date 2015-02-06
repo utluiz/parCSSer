@@ -3,9 +3,6 @@ package br.com.starcode.parccser;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.starcode.parccser.Parser;
-import br.com.starcode.parccser.ParserException;
-
 /**
  * Selector list:
  * http://www.w3.org/TR/css3-selectors/#selectors

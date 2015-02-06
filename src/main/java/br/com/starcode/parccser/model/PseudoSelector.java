@@ -1,9 +1,9 @@
 package br.com.starcode.parccser.model;
 
+import br.com.starcode.parccser.model.expression.PseudoExpression;
+
 public class PseudoSelector extends SimpleSelector {
 
-    public static enum PseudoType { PseudoElement, PseudoClass }
-    
     private String name;
     private PseudoType type;
     private boolean doubleColon;
