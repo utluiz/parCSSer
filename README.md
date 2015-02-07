@@ -18,7 +18,7 @@ Just add the following dependency:
 	<dependency>
 		<groupId>br.com.starcode.parccser</groupId>
 		<artifactId>parccser</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.1.1-RELEASE</version>
 	</dependency>
 
 ## Status
