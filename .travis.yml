@@ -18,7 +18,7 @@ before_install:
 - openssl aes-256-cbc -k "$ENC_SECRET" -in deploy-files/secring.gpg.enc -d -a -out gpg/secring.gpg
 - openssl aes-256-cbc -k "$ENC_SECRET" -in deploy-files/pubring.gpg.enc -d -a -out gpg/pubring.gpg
 after_success:
-- java_version=$(javac -version) 
+#- java_version=$(javac -version) 
 #- "[[ $java_version =~ 1.8 ]] && mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml"
-- mvn clean test jacoco:report coveralls:report
+- mvn clean test jacoco:report coveralls:report -B -V --settings deploy-files/settings.xml
 - mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml
