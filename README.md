@@ -11,7 +11,7 @@ A CSS Selector Parser for Java.
 
 ## Why
 
-Add jQuery-like capabilities to virtually any library.
+Add jQuery-like capabilities to virtually any library, mainly [Jericho Selector](https://github.com/utluiz/jericho-selector/), an extension I wrote to [Jericho HTML Parser](http://jericho.htmlparser.net).
 
 ## How 
 
@@ -22,14 +22,14 @@ Just add the following dependency:
 	<dependency>
 		<groupId>br.com.starcode.parccser</groupId>
 		<artifactId>parccser</artifactId>
-		<version>1.0-RELEASE</version>
+		<version>1.1.1-RELEASE</version>
 	</dependency>
 
 ## Status
 
-All main features implemented. 
-All important methods covered by tests, including failure scenarios.
-Lacks UTF-8 Characters Support.
+- All main features implemented. 
+- All important methods covered by tests, including failure scenarios.
+- Lacks UTF-8 Characters Support.
 
 ## Roadmap
 
