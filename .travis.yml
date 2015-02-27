@@ -20,4 +20,5 @@ before_install:
 after_success:
 - java_version=$(javac -version) 
 #- "[[ $java_version =~ 1.8 ]] && mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml"
+- mvn clean test jacoco:report coveralls:report
 - mvn deploy -DskipTests=true -B -V --settings deploy-files/settings.xml
