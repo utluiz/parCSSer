@@ -1,5 +1,9 @@
-CSS Selector Parser [![Build Status](https://travis-ci.org/utluiz/parCSSer.svg?branch=master)](https://travis-ci.org/utluiz/parCSSer)
+CSS Selector Parser
 ===================
+
+[![Build Status](https://travis-ci.org/utluiz/parCSSer.svg?branch=master)](https://travis-ci.org/utluiz/parCSSer)
+[![Coverage Status](https://coveralls.io/repos/utluiz/jericho-selector/badge.svg)](https://coveralls.io/r/utluiz/jericho-selector)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/br.com.starcode.parccser/parccser/badge.svg)](https://maven-badges.herokuapp.com/maven-central/br.com.starcode.parccser/parccser)
 
 
 

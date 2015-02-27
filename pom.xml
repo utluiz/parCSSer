@@ -61,25 +61,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<keyname>F5A1C843</keyname>
-					<homedir>gpg</homedir>
-					<passphrase>${GPG_PASSPHRASE}</passphrase>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
 				<version>1.6.3</version>
@@ -92,6 +73,57 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!-- only for travis-ci -->
+	<profiles>
+		<profile>
+		  <id>remote-profile</id>
+		  <build>
+		  	<plugins>
+		  		<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<keyname>F5A1C843</keyname>
+						<homedir>gpg</homedir>
+						<passphrase>${GPG_PASSPHRASE}</passphrase>
+					</configuration>
+				</plugin>
+				<plugin>
+				    <groupId>org.eluder.coveralls</groupId>
+				    <artifactId>coveralls-maven-plugin</artifactId>
+				    <version>3.0.1</version>
+				    <configuration>
+				    </configuration>
+				</plugin>
+				<plugin>
+				    <groupId>org.jacoco</groupId>
+				    <artifactId>jacoco-maven-plugin</artifactId>
+				    <version>0.7.2.201409121644</version>
+				    <executions>
+				        <execution>
+				            <id>prepare-agent</id>
+				            <goals>
+				                <goal>prepare-agent</goal>
+				            </goals>
+				        </execution>
+				    </executions>
+				</plugin>
+			</plugins>
+		  </build>
+		</profile>
+	</profiles>
+		
 	<licenses>
 	  <license>
 	    <name>MIT License</name>
