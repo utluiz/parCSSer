@@ -22,7 +22,7 @@ Just add the following dependency:
 	<dependency>
 		<groupId>br.com.starcode.parccser</groupId>
 		<artifactId>parccser</artifactId>
-		<version>1.1.2-RELEASE</version>
+		<version>1.1.3-RELEASE</version>
 	</dependency>
 
 ## Status
